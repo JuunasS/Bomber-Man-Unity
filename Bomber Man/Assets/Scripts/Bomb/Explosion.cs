@@ -11,5 +11,9 @@ public class Explosion : MonoBehaviour
             Debug.Log("Enemy Hit!");
             Destroy(collision.gameObject);
         }
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            // Player dies
+        }
     }
 }

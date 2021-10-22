@@ -16,6 +16,7 @@ public class MapDestroyer : MonoBehaviour
 
     public GameObject explosionPrefab;
 
+
     private void Awake()
     {
         // Checks if mapDestroyer exists and that the active scene is not MainMenu.
