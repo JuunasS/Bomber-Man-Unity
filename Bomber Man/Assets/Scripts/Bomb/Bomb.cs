@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-
     public float countdown = 2f;
+    private MapDestroyer mapDestroyer;
+
+    void Start()
+    {
+        // Find MapDestroyer script through Map
+        mapDestroyer = GameObject.Find("Map").transform.GetChild(0).gameObject.GetComponent<MapDestroyer>();
+        
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -16,7 +24,7 @@ public class Bomb : MonoBehaviour
         if (countdown <= 0)
         {
             Debug.Log("Explosion");
-            MapDestroyer.mapDestroyer.Explode(transform.position);
+            mapDestroyer.Explode(transform.position);
             Destroy(gameObject);
         }
         

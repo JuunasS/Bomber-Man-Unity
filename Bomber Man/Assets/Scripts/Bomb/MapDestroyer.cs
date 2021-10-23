@@ -6,8 +6,6 @@ using UnityEngine.Tilemaps;
 
 public class MapDestroyer : MonoBehaviour
 {
-    public static MapDestroyer mapDestroyer;
-
     public Tilemap tilemap;
 
     public Tile wallTile;
@@ -15,22 +13,6 @@ public class MapDestroyer : MonoBehaviour
     public Tile destructibleTile;
 
     public GameObject explosionPrefab;
-
-
-    private void Awake()
-    {
-        // Checks if mapDestroyer exists and that the active scene is not MainMenu.
-        if (mapDestroyer == null && SceneManager.GetActiveScene().name != "MainMenu")
-        {
-            DontDestroyOnLoad(gameObject);
-            mapDestroyer = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
 
     // Creates an explsion on the given world position.
     public void Explode(Vector2 worldPos)
@@ -56,7 +38,6 @@ public class MapDestroyer : MonoBehaviour
         {
             ExplodeCell(originCell + new Vector3Int(0, -2, 0));
         }
-
     }
 
     /*

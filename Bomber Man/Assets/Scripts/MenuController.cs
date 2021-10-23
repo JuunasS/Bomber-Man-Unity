@@ -5,20 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void LoadMapRandom()
     {
         SceneManager.LoadScene("Level-" + 1);
+    }
+
+    public void SingleplayerGame()
+    {
+        // Open map selection, set gamemanager singleplayer to true
+    }
+
+    public void MultiplayerGame()
+    {
+        // Open map selection, set gamemanager multiplayer to true
     }
 }
