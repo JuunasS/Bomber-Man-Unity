@@ -9,78 +9,86 @@ public class Enemy2 : MonoBehaviour
     private BoxCollider2D boxCollider2D;
     public float rayLength = 1.0f;
 
-    private float turnTime;
-    public float startTurnTime = 0.5f;
-
-    public Transform[] sides;
-
+    private Vector2 lastDirection;
+    Vector2 newPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
+        newPosition = (Vector2)transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkDirections();
+        transform.position = Vector2.MoveTowards(transform.position, newPosition, speed * Time.deltaTime);
 
+        // Check directions after reaching new position
+        if (Vector2.Distance(transform.position, newPosition) < 0.01f)
+        {
+            ArrayList viableDircetions = checkDirections();
+            Vector2 direction = randomizeDirection(viableDircetions, lastDirection);
+            lastDirection = (Vector2)transform.position - direction;
+
+            newPosition = (Vector2)transform.position + direction;
+            transform.position = Vector2.MoveTowards(transform.position, newPosition, speed * Time.deltaTime);
+        }
     }
 
-    private void checkDirections()
+    // Checks directions and retuns and array of viable directions (Vector2D) 
+    private ArrayList checkDirections()
     {
-        // Checks if enemy is at an intersection
+        // Directions
         Vector2 horizontalDir = transform.TransformDirection(Vector2.right) * 1f;
         Vector2 verticalDir = transform.TransformDirection(Vector2.up) * 1f;
 
-        RaycastHit2D rayRight = Physics2D.Raycast(sides[0].transform.position, horizontalDir, 2, LayerMask.GetMask("Wall"));
-        RaycastHit2D rayLeft = Physics2D.Raycast(sides[1].transform.position, -horizontalDir, 2, LayerMask.GetMask("Wall"));
-        RaycastHit2D rayUp = Physics2D.Raycast(sides[2].transform.position, verticalDir, 2, LayerMask.GetMask("Wall"));
-        RaycastHit2D rayDown = Physics2D.Raycast(sides[3].transform.position, -verticalDir, 2, LayerMask.GetMask("Wall"));
+        // Check directions (Right, Left, Up, Down)
+        RaycastHit2D rayRight = Physics2D.Raycast(boxCollider2D.bounds.center, horizontalDir, 1, LayerMask.GetMask("Wall"));
+        RaycastHit2D rayLeft = Physics2D.Raycast(boxCollider2D.bounds.center, -horizontalDir, 1, LayerMask.GetMask("Wall"));
+        RaycastHit2D rayUp = Physics2D.Raycast(boxCollider2D.bounds.center, verticalDir, 1, LayerMask.GetMask("Wall"));
+        RaycastHit2D rayDown = Physics2D.Raycast(boxCollider2D.bounds.center, -verticalDir, 1, LayerMask.GetMask("Wall"));
 
-        Debug.DrawRay(sides[0].transform.position, horizontalDir, Color.red);
-        Debug.DrawRay(sides[1].transform.position, -horizontalDir, Color.red);
-        Debug.DrawRay(sides[2].transform.position, verticalDir, Color.red);
-        Debug.DrawRay(sides[3].transform.position, -verticalDir, Color.red);
+        // Add viable directions into an ArrayList and return it
+        ArrayList viableDirections = new ArrayList();
 
-        if (turnTime <= 0)
+        Debug.Log("Checking directions.");
+        if (!rayRight)
         {
-            if (!(rayRight && rayLeft && rayUp && rayDown))
-            {
-                ArrayList viableDirections = new ArrayList();
-
-                Debug.Log("Intersection reached.");
-                if(!rayRight)
-                {
-                    viableDirections.Add(rayRight);
-                }
-                if (!rayLeft)
-                {
-                    viableDirections.Add(rayLeft);
-                }
-                if (!rayUp)
-                {
-                    viableDirections.Add(rayUp);
-                }
-                if (!rayDown)
-                {
-                    viableDirections.Add(rayDown);
-                }
-                // Randomize direction
-                turnTime = startTurnTime;
-            }
+            viableDirections.Add(new Vector2(1, 0));
+            //Debug.Log("Can move to the right");
         }
-        else
+        if (!rayLeft)
         {
-            turnTime -= Time.deltaTime;
+            viableDirections.Add(new Vector2(-1, 0));
+            //Debug.Log("Can move to the left");
         }
+        if (!rayUp)
+        {
+            viableDirections.Add(new Vector2(0, 1));
+            //Debug.Log("Can move up");
+        }
+        if (!rayDown)
+        {
+            viableDirections.Add(new Vector2(0, -1));
+            //Debug.Log("Can move down");
+        }
+
+        return viableDirections;
     }
 
-    private void randomizeDirection(ArrayList directions)
-    {
-        foreach(RaycastHit2D rayHit2D in directions) {
 
+    private Vector2 randomizeDirection(ArrayList directions, Vector2 lastDirection)
+    {
+        if (directions.Contains(lastDirection))
+        {
+            directions.Remove(lastDirection);
         }
+
+        int dirIndex = Random.Range(0, directions.Count);
+
+        return (Vector2)directions[dirIndex];
     }
 }
+
+
