@@ -13,7 +13,9 @@ public class Explosion : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Player"))
         {
-            // Player dies
+            // Player loses hp
+            collision.GetComponent<PlayerController>().TakeDamage(1);
         }
+        //GameManager.manager.checkGameState();
     }
 }

@@ -9,13 +9,14 @@ public class Enemy2 : MonoBehaviour
     private BoxCollider2D boxCollider2D;
     public float rayLength = 1.0f;
 
-    private Vector2 lastDirection;
+    public Vector2 lastDirection;
     Vector2 newPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
+        lastDirection = (Vector2)transform.position;
         newPosition = (Vector2)transform.position;
     }
 
@@ -27,9 +28,9 @@ public class Enemy2 : MonoBehaviour
         // Check directions after reaching new position
         if (Vector2.Distance(transform.position, newPosition) < 0.01f)
         {
-            ArrayList viableDircetions = checkDirections();
-            Vector2 direction = randomizeDirection(viableDircetions, lastDirection);
-            lastDirection = (Vector2)transform.position - direction;
+            ArrayList viableDirections = checkDirections();
+            Vector2 direction = randomizeDirection(viableDirections, lastDirection);
+            lastDirection = (Vector2)transform.position;
 
             newPosition = (Vector2)transform.position + direction;
             transform.position = Vector2.MoveTowards(transform.position, newPosition, speed * Time.deltaTime);
@@ -83,9 +84,9 @@ public class Enemy2 : MonoBehaviour
         if (directions.Contains(lastDirection))
         {
             directions.Remove(lastDirection);
-        }
+        } 
 
-        int dirIndex = Random.Range(0, directions.Count);
+        int dirIndex = Random.Range(0, directions.Count - 1);
 
         return (Vector2)directions[dirIndex];
     }

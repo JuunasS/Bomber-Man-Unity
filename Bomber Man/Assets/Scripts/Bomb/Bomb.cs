@@ -11,8 +11,6 @@ public class Bomb : MonoBehaviour
     {
         // Find MapDestroyer script through Map
         mapDestroyer = GameObject.Find("Map").transform.GetChild(0).gameObject.GetComponent<MapDestroyer>();
-        
-
     }
 
     // Update is called once per frame

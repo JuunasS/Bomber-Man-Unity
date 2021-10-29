@@ -119,11 +119,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  playerHealth: 3
+  isDead: 0
+  vulnerabilityCD: 1
+  isInvulnerableCD: 0
   tilemap: {fileID: 0}
   bombPrefab: {fileID: 6303582619477755441, guid: c280f500ce2351e4a8a3d1e5ebe3b8c9, type: 3}
   bombKey: 101
-  bombCooldown: 2
-  isCooldown: 0
+  bombCD: 2
+  isBombCD: 0
 --- !u!70 &977994433
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
