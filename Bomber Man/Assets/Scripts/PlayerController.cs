@@ -74,14 +74,19 @@ public class PlayerController : MonoBehaviour
         rb2D.MovePosition(rb2D.position + movement * speed * Time.deltaTime);
     }
 
+    public int GetHealth()
+    {
+        return playerHealth;
+    }
+
     // Takes health from the player if they do not have invulnerability
     public void TakeDamage(int dmg)
     {
         if((playerHealth - dmg) <= 0)
         {
             Debug.Log("Player has died.");
-            GameManager.manager.gameOver = true;
-            Destroy(gameObject);
+            GameManager.manager.CheckGameState();
+            // Destroy(gameObject);
         }
 
         if (vulnerabilityCDCounter <= 0)

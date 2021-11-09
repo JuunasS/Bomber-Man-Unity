@@ -10,8 +10,11 @@ public class GameManager : MonoBehaviour
 
     public bool isSingleplayer;
     public bool gameOver;
+    public bool isGameWon;
 
-    private int enemies;
+    public int enemies;
+
+    private GameObject[] playersList;
 
     public GameObject MenuCanvas;
 
@@ -41,41 +44,70 @@ public class GameManager : MonoBehaviour
         
     }
 
+    // Loadscene so that i can add more in between scene changes
+    public void LoadScene(string sceneName)
+    {
+        gameOver = false;
+        MenuCanvas.SetActive(false);
+
+        SceneManager.LoadScene(sceneName);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    public void RetryLevel()
+    {
+        gameOver = false;
+        MenuCanvas.SetActive(false);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    // Used for adding CountEnemies() after the scene is loaded.
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        CountEnemies();
+        CountPlayers();
+    }
+
+    // Counts the amount of enemies at the start of the level.
     public void CountEnemies()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
         Debug.Log("Enemies left: " + enemies);
+    }
+    public void CountPlayers()
+    {
+        playersList = GameObject.FindGameObjectsWithTag("Player");
 
+        if(playersList.Length > 0)
+        {
+            MenuCanvas.SetActive(true);
+        }
+
+        Debug.Log("Player ammount: " + playersList.Length);
+    }
+
+    // Checks the state of the game
+    public void CheckGameState()
+    {
+        Debug.Log("Checking game state...");
+
+        CountEnemies();
         if (enemies <= 0)
         {
             gameOver = true;
+            isGameWon = true;
+            Debug.Log("Game over! All enemies are dead.");
+        }
+
+        foreach (GameObject player in playersList){
+            if(player.GetComponent<PlayerController>().GetHealth() <= 0)
+            {
+                gameOver = true;
+                isGameWon = false;
+                Debug.Log("Game over! Player has died.");
+            }
         }
     }
-
-    /*
-    public void EnemyDeath()
-    {
-        Debug.Log("Enemy has died");
-        enemies--;
-    }
-    */
-
-    // Loadscene so that i can add more in between scene changes
-    public void LoadScene(string sceneName)
-    {
-        gameOver = false;
-        SceneManager.LoadScene(sceneName);
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        CountEnemies();
-    }
-
-
-    
-
 }

@@ -1,18 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EndMenu : MonoBehaviour
 {
     public GameObject endMenuUI;
-    public bool gameOver = false;
+    public Button retryButton;
+    public Button nextLevelButton;
+    public Text gameOverText;
+
+    void Start()
+    {
+        retryButton.gameObject.SetActive(false);
+        nextLevelButton.gameObject.SetActive(false);
+    }
 
     void Update()
     {
-        if(gameOver)
+        if(GameManager.manager.gameOver)
         {
             endMenuUI.SetActive(true);
+
+            if(GameManager.manager.isGameWon)
+            {
+                gameOverText.text = "Game won";
+                retryButton.gameObject.SetActive(false);
+                nextLevelButton.gameObject.SetActive(true);
+            } else
+            {
+                gameOverText.text = "Game lost";
+                retryButton.gameObject.SetActive(true);
+                nextLevelButton.gameObject.SetActive(false);
+            }
         }
+    }
+
+    public void RetryLevel()
+    {
+        GameManager.manager.RetryLevel();
+        endMenuUI.SetActive(false);
     }
     public void LoadNextLevel()
     {
