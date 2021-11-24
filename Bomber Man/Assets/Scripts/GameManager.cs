@@ -12,18 +12,17 @@ public class GameManager : MonoBehaviour
     public bool gameOver;
     public bool isGameWon;
 
-    public int enemies;
-
-    private GameObject[] playersList;
+    public GameObject[] playerTable;
+    public List<GameObject> enemyList;
 
     public GameObject MenuCanvas;
 
 
     private void Awake()
     {
-        if(manager == null)
+        if (manager == null)
         {
-            // If manager does not exist do't destroy this
+            // If manager does not exist don't destroy this
             DontDestroyOnLoad(gameObject);
             manager = this;
         }
@@ -41,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     // Loadscene so that i can add more in between scene changes
@@ -70,22 +69,35 @@ public class GameManager : MonoBehaviour
     }
 
     // Counts the amount of enemies at the start of the level.
-    public void CountEnemies()
+    public float CountEnemies()
     {
-        enemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        GameObject[] enemyTable = GameObject.FindGameObjectsWithTag("Enemy");
 
-        Debug.Log("Enemies left: " + enemies);
+        enemyList.Clear();
+        Debug.Log("Tyhjennetty lista: " + enemyList.Count);
+
+        foreach (GameObject enemy in enemyTable)
+        {
+            Debug.Log("Vihollinen jäljellä +1");
+            enemyList.Add(enemy);
+        }
+
+        enemyList.RemoveAll(item => item == null);
+
+        Debug.Log("Enemies left: " + enemyList.Count);
+        return enemyList.Count;
     }
+
     public void CountPlayers()
     {
-        playersList = GameObject.FindGameObjectsWithTag("Player");
+        playerTable = GameObject.FindGameObjectsWithTag("Player");
 
-        if(playersList.Length > 0)
+        if (playerTable.Length > 0)
         {
             MenuCanvas.SetActive(true);
         }
 
-        Debug.Log("Player ammount: " + playersList.Length);
+        Debug.Log("Player ammount: " + playerTable.Length);
     }
 
     // Checks the state of the game
@@ -93,16 +105,17 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Checking game state...");
 
-        CountEnemies();
-        if (enemies <= 0)
+        float numOfEnemies = CountEnemies();
+        if (numOfEnemies == 0)
         {
             gameOver = true;
             isGameWon = true;
             Debug.Log("Game over! All enemies are dead.");
         }
 
-        foreach (GameObject player in playersList){
-            if(player.GetComponent<PlayerController>().GetHealth() <= 0)
+        foreach (GameObject player in playerTable)
+        {
+            if (player.GetComponent<PlayerController>().GetHealth() <= 0)
             {
                 gameOver = true;
                 isGameWon = false;

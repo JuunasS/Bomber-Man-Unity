@@ -10,9 +10,9 @@ public class EnemyCollision : MonoBehaviour
         if (collision.CompareTag("Explosion"))
         {
             Debug.Log("Enemy hit by explosion!");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+            new WaitForSeconds(1);
             GameManager.manager.CheckGameState();
-            // Check enemy count from gamemanager FIX
         }
     }
 }

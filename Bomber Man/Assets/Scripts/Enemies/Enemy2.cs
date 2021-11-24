@@ -81,10 +81,12 @@ public class Enemy2 : MonoBehaviour
 
     private Vector2 randomizeDirection(ArrayList directions, Vector2 lastDirection)
     {
+        /*
         if (directions.Contains(lastDirection))
         {
             directions.Remove(lastDirection);
         } 
+        */
 
         int dirIndex = Random.Range(0, directions.Count - 1);
 

@@ -86,7 +86,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Player has died.");
             GameManager.manager.CheckGameState();
-            // Destroy(gameObject);
         }
 
         if (vulnerabilityCDCounter <= 0)
@@ -103,6 +102,7 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Explosion"))
         {
             Debug.Log("Player hit by explosion!");
+            GameManager.manager.CheckGameState();
             TakeDamage(1);
         } 
     }
