@@ -10,6 +10,7 @@ public class EnemyCollision : MonoBehaviour
         if (collision.CompareTag("Explosion"))
         {
             Debug.Log("Enemy hit by explosion!");
+            gameObject.tag = "Destroyed";
             Destroy(gameObject);
             new WaitForSeconds(1);
             GameManager.manager.CheckGameState();
