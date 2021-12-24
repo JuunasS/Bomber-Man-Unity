@@ -43,6 +43,7 @@ public class EndMenu : MonoBehaviour
     }
     public void LoadNextLevel()
     {
+        GameManager.manager.LoadNextLevel();
         endMenuUI.SetActive(false);
     }
 

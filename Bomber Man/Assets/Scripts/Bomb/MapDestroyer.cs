@@ -14,7 +14,7 @@ public class MapDestroyer : MonoBehaviour
 
     public GameObject explosionPrefab;
 
-    // Creates an explsion on the given world position.
+    // Creates an explosion on the given world position.
     public void Explode(Vector2 worldPos)
     {
         Vector3Int originCell = tilemap.WorldToCell(worldPos);

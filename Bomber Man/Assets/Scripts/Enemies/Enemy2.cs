@@ -85,13 +85,15 @@ public class Enemy2 : MonoBehaviour
 
     private Vector2 randomizeDirection(ArrayList directions, Vector2 lastDirection)
     {
+        /*
         foreach(Vector2 dir in directions)
         {
             Debug.Log(dir);
         }
+        */
         int dirIndex = Random.Range(0, directions.Count);
 
-        Debug.Log("DirIndex: " + dirIndex);
+        //Debug.Log("DirIndex: " + dirIndex);
 
         return (Vector2)directions[dirIndex];
     }

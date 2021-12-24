@@ -105,6 +105,30 @@ public class PlayerController : MonoBehaviour
             GameManager.manager.CheckGameState();
             TakeDamage(1);
         } 
+        
+        if (collision.CompareTag("Boost-1"))
+        {
+            // Lower cd of bomb placement for 5 seconds
+            Debug.Log("Bomb cd boost activated");
+            StartCoroutine(BombCdBoost(5));
+            Destroy(collision.gameObject);
+
+        }
+
+        if (collision.CompareTag("Boost-2"))
+        {
+            // Do something
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private IEnumerator BombCdBoost(float duration)
+    {
+        bombCD = 0;
+        Debug.Log("Bomb cd set to 0");
+        yield return new WaitForSeconds(duration);
+        bombCD = 2.0f;
+        Debug.Log("Bomb cd set to 2.0f");
     }
 
     void OnCollisionEnter2D(Collision2D collision)

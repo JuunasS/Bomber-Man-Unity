@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public bool isSingleplayer;
     public bool gameOver;
     public bool isGameWon;
+    public int nextScene;
 
     public GameObject[] playerTable;
     public List<GameObject> enemyList;
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameOver = false;
+        nextScene = SceneManager.GetActiveScene().buildIndex + 1;
     }
 
     void Update()
@@ -59,6 +61,20 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    public void LoadNextLevel()
+    {
+        gameOver = false;
+        MenuCanvas.SetActive(false);
+
+        nextScene = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextScene > PlayerPrefs.GetInt("levelAt"))
+        {
+            PlayerPrefs.SetInt("levelAt", nextScene);
+        }
+        SceneManager.LoadScene(nextScene);
+       
+
     }
 
     // Used for adding CountEnemies() after the scene is loaded.

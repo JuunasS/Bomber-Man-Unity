@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Explosion
   - Destroyed
+  - Boost-1
+  - Boost-2
   layers:
   - Default
   - TransparentFX
