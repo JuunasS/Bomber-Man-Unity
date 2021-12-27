@@ -118,6 +118,8 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Boost-2"))
         {
             // Do something
+            vulnerabilityCDCounter = 5.0f;
+            isInvulnerableCD = true;
             Destroy(collision.gameObject);
         }
     }

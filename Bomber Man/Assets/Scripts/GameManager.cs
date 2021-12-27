@@ -68,9 +68,9 @@ public class GameManager : MonoBehaviour
         MenuCanvas.SetActive(false);
 
         nextScene = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextScene > PlayerPrefs.GetInt("levelAt"))
+        if (nextScene > PlayerPrefs.GetInt("LevelAt"))
         {
-            PlayerPrefs.SetInt("levelAt", nextScene);
+            PlayerPrefs.SetInt("LevelAt", nextScene);
         }
         SceneManager.LoadScene(nextScene);
        
