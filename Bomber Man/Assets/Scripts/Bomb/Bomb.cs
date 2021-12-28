@@ -6,6 +6,7 @@ public class Bomb : MonoBehaviour
 {
     public float countdown = 2f;
     private MapDestroyer mapDestroyer;
+    private GameObject player;
 
     void Start()
     {
@@ -22,9 +23,14 @@ public class Bomb : MonoBehaviour
         if (countdown <= 0)
         {
             Debug.Log("Explosion");
-            mapDestroyer.Explode(transform.position);
+            mapDestroyer.Explode(transform.position, this.player);
             Destroy(gameObject);
         }
         
+    }
+
+    public void SetPlayer(GameObject player)
+    {
+        this.player = player;
     }
 }

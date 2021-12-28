@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     // Bomb placement cooldown variables
     public float bombCD = 2.0f;
+    public int explosionDistance = 2;
     private float bombCDCounter = 0;
     public bool isBombCD = false;
 
@@ -53,7 +54,8 @@ public class PlayerController : MonoBehaviour
                 Vector3Int cell = tilemap.WorldToCell(gameObject.transform.position);
                 Vector3 cellCenterpos = tilemap.GetCellCenterWorld(cell);
 
-                Instantiate(bombPrefab, cellCenterpos, Quaternion.identity);
+                GameObject bomb = Instantiate(bombPrefab, cellCenterpos, Quaternion.identity);
+                bomb.GetComponent<Bomb>().SetPlayer(this.gameObject);
                 bombCDCounter = bombCD;
                 isBombCD = true;
             }
@@ -117,9 +119,17 @@ public class PlayerController : MonoBehaviour
 
         if (collision.CompareTag("Boost-2"))
         {
-            // Do something
+            // Make player invulnerable for 5 seconds
             vulnerabilityCDCounter = 5.0f;
             isInvulnerableCD = true;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.CompareTag("Boost-3"))
+        {
+            // Set explosion distance to 5
+            Debug.Log("Explosion distance boost activated");
+            StartCoroutine(BombDistanceBoost(5));
             Destroy(collision.gameObject);
         }
     }
@@ -131,6 +141,15 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         bombCD = 2.0f;
         Debug.Log("Bomb cd set to 2.0f");
+    }
+
+    private IEnumerator BombDistanceBoost(float duration)
+    {
+        explosionDistance = 5;
+        Debug.Log("Explosion distance set to 5");
+        yield return new WaitForSeconds(duration);
+        explosionDistance = 2;
+        Debug.Log("Explosion distance set to 2");
     }
 
     void OnCollisionEnter2D(Collision2D collision)

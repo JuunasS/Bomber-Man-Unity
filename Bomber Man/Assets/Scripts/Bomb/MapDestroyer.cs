@@ -15,30 +15,43 @@ public class MapDestroyer : MonoBehaviour
     public GameObject explosionPrefab;
 
     // Creates an explosion on the given world position.
-    public void Explode(Vector2 worldPos)
+    public void Explode(Vector2 worldPos, GameObject player)
     {
         Vector3Int originCell = tilemap.WorldToCell(worldPos);
 
         ExplodeCell(originCell);
 
         // Checks if explosions can continue forward.
-        if (ExplodeCell(originCell + new Vector3Int(1, 0, 0)))
+        ExplosionCheck(player.GetComponent<PlayerController>().explosionDistance, originCell);
+    }
+
+    private void ExplosionCheck(int distance, Vector3Int originCell)
+    {
+        for(int i = 1; i <= distance; i++)
         {
-            ExplodeCell(originCell + new Vector3Int(2, 0, 0));
+            if(ExplodeCell(originCell + new Vector3Int(i, 0, 0))) { } 
+            else { break; }
         }
-        if (ExplodeCell(originCell + new Vector3Int(0, 1, 0)))
+
+        for (int i = 1; i <= distance; i++)
         {
-            ExplodeCell(originCell + new Vector3Int(0, 2, 0));
+            if (ExplodeCell(originCell + new Vector3Int(0, i, 0))) { }
+            else { break; }
         }
-        if (ExplodeCell(originCell + new Vector3Int(-1, 0, 0)))
+
+        for (int i = 1; i <= distance; i++)
         {
-            ExplodeCell(originCell + new Vector3Int(-2, 0, 0));
+            if (ExplodeCell(originCell + new Vector3Int(-i, 0, 0))) { }
+            else { break; }
         }
-        if (ExplodeCell(originCell + new Vector3Int(0, -1, 0)))
+
+        for (int i = 1; i <= distance; i++)
         {
-            ExplodeCell(originCell + new Vector3Int(0, -2, 0));
+            if (ExplodeCell(originCell + new Vector3Int(0, -i, 0))) { }
+            else { break; }
         }
     }
+
 
     /*
      * Finds tile with given cell, checks if tile should be removed in the explosion.
