@@ -370,7 +370,10 @@ MonoBehaviour:
   isSingleplayer: 0
   gameOver: 0
   isGameWon: 0
-  MenuCanvas: {fileID: 0}
+  nextScene: 0
+  playerTable: []
+  enemyList: []
+  MenuCanvas: {fileID: 5371475975267465199}
 --- !u!1 &1713684176483870499
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,9 +590,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4010854641090540302}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
+      - m_Target: {fileID: 7103339258679369881}
+        m_TargetAssemblyTypeName: EndMenu, Assembly-CSharp
+        m_MethodName: RetryLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -815,8 +818,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4010854641090540302}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+      - m_Target: {fileID: 7103339258679369881}
+        m_TargetAssemblyTypeName: EndMenu, Assembly-CSharp
         m_MethodName: LoadMenu
         m_Mode: 1
         m_Arguments:
@@ -1053,6 +1056,7 @@ MonoBehaviour:
   endMenuUI: {fileID: 6736062173478155525}
   retryButton: {fileID: 2346267499465243633}
   nextLevelButton: {fileID: 837247871346181006}
+  gameOverText: {fileID: 5878513445379514430}
 --- !u!1 &5456755173740885362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,9 +1178,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4010854641090540302}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
+      - m_Target: {fileID: 7103339258679369881}
+        m_TargetAssemblyTypeName: EndMenu, Assembly-CSharp
+        m_MethodName: LoadNextLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1297,7 +1301,7 @@ GameObject:
   - component: {fileID: 5878513445379514430}
   - component: {fileID: 6392918545377568989}
   m_Layer: 5
-  m_Name: Text
+  m_Name: GameOverText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1941,8 +1945,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4010854641090540302}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+      - m_Target: {fileID: 7103339258679369881}
+        m_TargetAssemblyTypeName: EndMenu, Assembly-CSharp
         m_MethodName: LoadLevelSelection
         m_Mode: 1
         m_Arguments:

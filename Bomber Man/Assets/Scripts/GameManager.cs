@@ -11,12 +11,16 @@ public class GameManager : MonoBehaviour
     public bool isSingleplayer;
     public bool gameOver;
     public bool isGameWon;
+    public bool levelStarted;
     public int nextScene;
 
     public GameObject[] playerTable;
     public List<GameObject> enemyList;
 
     public GameObject MenuCanvas;
+
+    public int score;
+    public int highScore;
 
 
     private void Awake()
@@ -48,6 +52,7 @@ public class GameManager : MonoBehaviour
     // Loadscene so that i can add more in between scene changes
     public void LoadScene(string sceneName)
     {
+        score = 0;
         gameOver = false;
         MenuCanvas.SetActive(false);
 
@@ -56,7 +61,7 @@ public class GameManager : MonoBehaviour
     }
     public void RetryLevel()
     {
-        gameOver = false;
+        score = 0;
         MenuCanvas.SetActive(false);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -64,6 +69,7 @@ public class GameManager : MonoBehaviour
     }
     public void LoadNextLevel()
     {
+        score = 0;
         gameOver = false;
         MenuCanvas.SetActive(false);
 
@@ -73,19 +79,36 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("LevelAt", nextScene);
         }
         SceneManager.LoadScene(nextScene);
-       
 
     }
 
     // Used for adding CountEnemies() after the scene is loaded.
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        CountEnemies();
-        CountPlayers();
+        int enemies = CountEnemies();
+        int players = CountPlayers();
+        if(SceneManager.GetActiveScene().buildIndex >= 4)
+        {
+            string highscoreKey = SceneManager.GetActiveScene().name;
+            Debug.Log("Highscore set to " + highscoreKey + " value");
+            highScore = PlayerPrefs.GetInt(highscoreKey, 0);
+        }
+    }
+
+    public void AddScore(int num)
+    {
+        score += num;
+        string highscoreKey = SceneManager.GetActiveScene().name;
+        PlayerPrefs.SetInt(highscoreKey, highScore);
+        GameObject.Find("ScoreCanvas").GetComponent<SingleplayerScore>().UpdateScore(score, PlayerPrefs.GetInt(highscoreKey, 0));
+        if (this.score > highScore)
+        {
+            highScore = this.score;
+        }
     }
 
     // Counts the amount of enemies at the start of the level.
-    public float CountEnemies()
+    public int CountEnemies()
     {
         GameObject[] enemyTable = GameObject.FindGameObjectsWithTag("Enemy");
 
@@ -104,7 +127,7 @@ public class GameManager : MonoBehaviour
         return enemyList.Count;
     }
 
-    public void CountPlayers()
+    public int CountPlayers()
     {
         playerTable = GameObject.FindGameObjectsWithTag("Player");
 
@@ -114,6 +137,8 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("Player ammount: " + playerTable.Length);
+
+        return playerTable.Length;
     }
 
     // Checks the state of the game

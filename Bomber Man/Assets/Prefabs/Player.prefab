@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 179721629650977623}
   - component: {fileID: 179721629650977621}
   - component: {fileID: 977994433}
+  - component: {fileID: 6950762672534199713}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.21038437, a: 1}
+  m_Sprite: {fileID: 5198748543061312155, guid: 134c41557c19eda4cb7f5506a08ba825, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -119,14 +120,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  animator: {fileID: 6950762672534199713}
   playerHealth: 3
-  isDead: 0
+  isAlive: 0
   vulnerabilityCD: 1
   isInvulnerableCD: 0
   tilemap: {fileID: 0}
   bombPrefab: {fileID: 6303582619477755441, guid: c280f500ce2351e4a8a3d1e5ebe3b8c9, type: 3}
   bombKey: 101
   bombCD: 2
+  explosionDistance: 2
   isBombCD: 0
 --- !u!70 &977994433
 CapsuleCollider2D:
@@ -144,3 +147,22 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!95 &6950762672534199713
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179721629650977616}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9659adb5a51caee449fee5df642e3a35, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

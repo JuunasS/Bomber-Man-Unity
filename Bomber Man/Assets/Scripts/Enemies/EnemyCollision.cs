@@ -11,6 +11,7 @@ public class EnemyCollision : MonoBehaviour
         {
             Debug.Log("Enemy hit by explosion!");
             gameObject.tag = "Destroyed";
+            GameManager.manager.AddScore(10);
             Destroy(gameObject);
             GameManager.manager.CheckGameState();
         }

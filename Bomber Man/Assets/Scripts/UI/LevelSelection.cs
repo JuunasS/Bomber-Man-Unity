@@ -22,7 +22,7 @@ public class LevelSelection : MonoBehaviour
             isInteractable = true;
         }
 
-        levelAt = PlayerPrefs.GetInt("LevelAt", 2);
+        levelAt = PlayerPrefs.GetInt("LevelAt", 4);
         Debug.Log("Level at: " + levelAt);
         for (int i = 0; i < lvlButtons.Length; i++)
         {

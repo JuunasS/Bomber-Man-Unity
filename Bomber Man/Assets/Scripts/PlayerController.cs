@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     Rigidbody2D rb2D;
     Vector2 movement;
+    public Animator animator;
+
 
     // Player status variables
     public int playerHealth = 3;
@@ -43,6 +45,11 @@ public class PlayerController : MonoBehaviour
             // Movement inputs
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
+
+            // Set animator values
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+            animator.SetFloat("Speed", movement.sqrMagnitude);
 
             // Bomb placement cooldown timer
             if (isBombCD)

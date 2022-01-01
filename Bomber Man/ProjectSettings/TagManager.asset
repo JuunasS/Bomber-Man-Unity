@@ -9,6 +9,7 @@ TagManager:
   - Destroyed
   - Boost-1
   - Boost-2
+  - Boost-3
   layers:
   - Default
   - TransparentFX
