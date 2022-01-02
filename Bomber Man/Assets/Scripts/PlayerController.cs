@@ -30,6 +30,15 @@ public class PlayerController : MonoBehaviour
     private float bombCDCounter = 0;
     public bool isBombCD = false;
 
+    private void Awake()
+    {
+        if (tilemap == null)
+        {
+            Debug.Log("Setting tilemap");
+            tilemap = GameObject.FindGameObjectWithTag("Gameplay_Tilemap").GetComponent<Tilemap>();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

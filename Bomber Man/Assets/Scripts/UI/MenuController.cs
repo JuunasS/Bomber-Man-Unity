@@ -14,7 +14,7 @@ public class MenuController : MonoBehaviour
     public void LoadMultiplayerGame()
     {
         // Open map selection, set gamemanager singleplayer to false
-        GameManager.manager.LoadScene("LevelSelection");
+        GameManager.manager.LoadScene("Loading");
         GameManager.manager.isSingleplayer = false;
     }
 }

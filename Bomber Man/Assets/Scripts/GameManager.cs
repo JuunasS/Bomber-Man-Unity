@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     {
         int enemies = CountEnemies();
         int players = CountPlayers();
-        if(SceneManager.GetActiveScene().buildIndex >= 4)
+        if(SceneManager.GetActiveScene().buildIndex >= 5)
         {
             string highscoreKey = SceneManager.GetActiveScene().name;
             Debug.Log("Highscore set to " + highscoreKey + " value");

@@ -10,6 +10,7 @@ TagManager:
   - Boost-1
   - Boost-2
   - Boost-3
+  - Gameplay_Tilemap
   layers:
   - Default
   - TransparentFX
