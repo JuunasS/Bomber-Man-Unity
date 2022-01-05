@@ -13,6 +13,7 @@ public class SpawnPlayers : MonoBehaviour
     void Start()
     {
         PhotonNetwork.Instantiate(playerPrefab.name, spawnPositions[PhotonNetwork.CurrentRoom.PlayerCount - 1].position, Quaternion.identity);
+        GameManager.manager.CountPlayers();
     }
 
 }

@@ -44,14 +44,10 @@ public class GameManager : MonoBehaviour
         nextScene = SceneManager.GetActiveScene().buildIndex + 1;
     }
 
-    void Update()
-    {
-
-    }
-
     // Loadscene so that i can add more in between scene changes
     public void LoadScene(string sceneName)
     {
+        isSingleplayer = true;
         score = 0;
         gameOver = false;
         MenuCanvas.SetActive(false);
@@ -62,6 +58,7 @@ public class GameManager : MonoBehaviour
     public void RetryLevel()
     {
         score = 0;
+        gameOver = false;
         MenuCanvas.SetActive(false);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -87,7 +84,7 @@ public class GameManager : MonoBehaviour
     {
         int enemies = CountEnemies();
         int players = CountPlayers();
-        if(SceneManager.GetActiveScene().buildIndex >= 5)
+        if (SceneManager.GetActiveScene().buildIndex >= 5)
         {
             string highscoreKey = SceneManager.GetActiveScene().name;
             Debug.Log("Highscore set to " + highscoreKey + " value");
@@ -146,22 +143,30 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Checking game state...");
 
-        float numOfEnemies = CountEnemies();
-        if (numOfEnemies == 0)
+        if (isSingleplayer)
         {
-            gameOver = true;
-            isGameWon = true;
-            Debug.Log("Game over! All enemies are dead.");
-        }
-
-        foreach (GameObject player in playerTable)
-        {
-            if (player.GetComponent<PlayerController>().GetHealth() <= 0)
+            float numOfEnemies = CountEnemies();
+            if (numOfEnemies == 0)
             {
                 gameOver = true;
-                isGameWon = false;
-                Debug.Log("Game over! Player has died.");
+                isGameWon = true;
+                Debug.Log("Game over! All enemies are dead.");
+            }
+        }
+    }
+
+    public void CheckMultiplayerState()
+    {
+        foreach (GameObject player in playerTable)
+        {
+            Debug.Log("Looping playertable");
+
+            if (player.GetComponent<PlayerControllerMultiplayer>().isAlive == false)
+            {
+                // Add to counter, if only 1 player is alive set endmenu.
             }
         }
     }
 }
+
+

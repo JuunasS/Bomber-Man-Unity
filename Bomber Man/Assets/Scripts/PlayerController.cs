@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
 public class PlayerController : MonoBehaviour
 {
     // Movement variables
@@ -10,7 +9,6 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb2D;
     Vector2 movement;
     public Animator animator;
-
 
     // Player status variables
     public int playerHealth = 3;
@@ -49,17 +47,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isAlive)
+        if (isAlive)
         {
             // Movement inputs
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
-
             // Set animator values
             animator.SetFloat("Horizontal", movement.x);
             animator.SetFloat("Vertical", movement.y);
             animator.SetFloat("Speed", movement.sqrMagnitude);
-
             // Bomb placement cooldown timer
             if (isBombCD)
             {
@@ -69,13 +65,11 @@ public class PlayerController : MonoBehaviour
             {
                 Vector3Int cell = tilemap.WorldToCell(gameObject.transform.position);
                 Vector3 cellCenterpos = tilemap.GetCellCenterWorld(cell);
-
                 GameObject bomb = Instantiate(bombPrefab, cellCenterpos, Quaternion.identity);
                 bomb.GetComponent<Bomb>().SetPlayer(this.gameObject);
                 bombCDCounter = bombCD;
                 isBombCD = true;
             }
-
             // Player vulnerability timer
             if (isInvulnerableCD)
             {
@@ -86,7 +80,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    
+
     private void FixedUpdate()
     {
         rb2D.MovePosition(rb2D.position + movement * speed * Time.deltaTime);
@@ -100,12 +94,14 @@ public class PlayerController : MonoBehaviour
     // Takes health from the player if they do not have invulnerability
     public void TakeDamage(int dmg)
     {
-        if((playerHealth - dmg) <= 0)
+        if ((playerHealth - dmg) <= 0)
         {
+            isAlive = false;
             Debug.Log("Player has died.");
-            GameManager.manager.CheckGameState();
+            GameManager.manager.gameOver = true;
+            GameManager.manager.isGameWon = false;
+            Destroy(this.gameObject);
         }
-
         if (vulnerabilityCDCounter <= 0)
         {
             Debug.Log("Player has lost " + dmg + " health.");
@@ -120,19 +116,16 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Explosion"))
         {
             Debug.Log("Player hit by explosion!");
-            GameManager.manager.CheckGameState();
             TakeDamage(1);
-        } 
-        
+        }
+
         if (collision.CompareTag("Boost-1"))
         {
             // Lower cd of bomb placement for 5 seconds
             Debug.Log("Bomb cd boost activated");
             StartCoroutine(BombCdBoost(5));
             Destroy(collision.gameObject);
-
         }
-
         if (collision.CompareTag("Boost-2"))
         {
             // Make player invulnerable for 5 seconds
@@ -140,7 +133,6 @@ public class PlayerController : MonoBehaviour
             isInvulnerableCD = true;
             Destroy(collision.gameObject);
         }
-
         if (collision.CompareTag("Boost-3"))
         {
             // Set explosion distance to 5

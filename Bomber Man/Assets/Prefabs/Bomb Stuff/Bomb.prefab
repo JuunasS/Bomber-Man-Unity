@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 758ac87cd56c53b48948ab6e9158f33c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4196454dfdce4c1438f8ff6dd58d6c23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,3 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a2e104e18883d40b422b591d4785ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countdown: 2
+  mapDestroyer: {fileID: 0}
+  player: {fileID: 0}

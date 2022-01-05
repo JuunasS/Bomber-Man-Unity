@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +23,14 @@ public class MapDestroyer : MonoBehaviour
         ExplodeCell(originCell);
 
         // Checks if explosions can continue forward.
-        ExplosionCheck(player.GetComponent<PlayerController>().explosionDistance, originCell);
+        if(GameManager.manager.isSingleplayer)
+        {
+            ExplosionCheck(player.GetComponent<PlayerController>().explosionDistance, originCell);
+        } else
+        {
+            ExplosionCheck(player.GetComponent<PlayerControllerMultiplayer>().explosionDistance, originCell);
+
+        }
     }
 
     private void ExplosionCheck(int distance, Vector3Int originCell)
@@ -53,11 +61,12 @@ public class MapDestroyer : MonoBehaviour
     }
 
 
+    [PunRPC]
     /*
      * Finds tile with given cell, checks if tile should be removed in the explosion.
      * Instansiates explosion prefab.
     */
-   private bool ExplodeCell(Vector3Int cell)
+    private bool ExplodeCell(Vector3Int cell)
     {
         Tile tile =  tilemap.GetTile<Tile>(cell);
         

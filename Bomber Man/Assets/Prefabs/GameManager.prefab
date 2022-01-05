@@ -370,10 +370,13 @@ MonoBehaviour:
   isSingleplayer: 0
   gameOver: 0
   isGameWon: 0
+  levelStarted: 0
   nextScene: 0
   playerTable: []
   enemyList: []
   MenuCanvas: {fileID: 5371475975267465199}
+  score: 0
+  highScore: 0
 --- !u!1 &1713684176483870499
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,7 +979,7 @@ Canvas:
   m_GameObject: {fileID: 5371475975267465199}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
