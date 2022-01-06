@@ -122,7 +122,7 @@ public class PlayerControllerMultiplayer : MonoBehaviourPunCallbacks
             Debug.Log("Player has died.");
             isAlive = false;
             this.gameObject.tag = "Destroyed";
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
             GameManager.manager.CheckMultiplayerState();
         }
 

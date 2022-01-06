@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
             GameManager.manager.gameOver = true;
             GameManager.manager.isGameWon = false;
             GameManager.manager.CheckSingleplayerState();
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
         if (vulnerabilityCDCounter <= 0)
         {

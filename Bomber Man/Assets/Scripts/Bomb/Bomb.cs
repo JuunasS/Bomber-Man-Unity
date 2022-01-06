@@ -23,7 +23,7 @@ public class Bomb : MonoBehaviour
         // Countdown until explosion.
         countdown -= Time.deltaTime;
 
-        if (countdown <= 0)
+        if (countdown <= 0 && player != null)
         {
             Debug.Log("Explosion");
             mapDestroyer.Explode(transform.position, this.player);
