@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -46,7 +47,14 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        GameManager.manager.LoadScene("MainMenu");
+        if (GameManager.manager.isSingleplayer)
+        {
+            GameManager.manager.LoadScene("MainMenu");
+        } 
+        else
+        {
+            SwitchLevel("MainMenu");
+        }
     }
 
     // Loads LevelSelection scene.
@@ -54,6 +62,28 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        GameManager.manager.LoadScene("LevelSelection");
+        if (GameManager.manager.isSingleplayer)
+        {
+            GameManager.manager.LoadScene("LevelSelection");
+        }
+        else
+        {
+            SwitchLevel("LevelSelection");
+        }
+    }
+
+    public void SwitchLevel(string level)
+    {
+        StartCoroutine(DoSwitchLevel(level));
+    }
+
+    IEnumerator DoSwitchLevel(string level)
+    {
+        PhotonNetwork.Disconnect();
+        while (PhotonNetwork.IsConnected)
+        {
+            yield return null;
+        }
+        GameManager.manager.LoadScene(level);
     }
 }

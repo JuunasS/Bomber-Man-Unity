@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     // Player status variables
     public int playerHealth = 3;
+    public Text healthText;
     public bool isAlive;
     public float vulnerabilityCD = 1.0f;
     private float vulnerabilityCDCounter = 0;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        healthText.text = playerHealth.ToString();
         isAlive = true;
         rb2D = GetComponent<Rigidbody2D>();
     }
@@ -47,7 +50,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isAlive)
+        if (isAlive && !GameManager.manager.gameOver)
         {
             // Movement inputs
             movement.x = Input.GetAxisRaw("Horizontal");
@@ -100,12 +103,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player has died.");
             GameManager.manager.gameOver = true;
             GameManager.manager.isGameWon = false;
+            GameManager.manager.CheckSingleplayerState();
             Destroy(this.gameObject);
         }
         if (vulnerabilityCDCounter <= 0)
         {
             Debug.Log("Player has lost " + dmg + " health.");
             playerHealth -= dmg;
+            healthText.text = playerHealth.ToString();
             vulnerabilityCDCounter = vulnerabilityCD;
             isInvulnerableCD = true;
         }

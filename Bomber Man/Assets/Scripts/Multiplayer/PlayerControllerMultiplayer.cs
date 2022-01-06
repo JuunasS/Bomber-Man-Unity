@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using Photon.Pun;
 using Photon.Realtime;
@@ -17,8 +18,9 @@ public class PlayerControllerMultiplayer : MonoBehaviourPunCallbacks
 
     // Player status variables
     public int playerHealth = 3;
+    public Text healthText;
     public bool isAlive;
-    public float vulnerabilityCD = 1.0f;
+    public float vulnerabilityCD = 3.0f;
     private float vulnerabilityCDCounter = 0;
     public bool isInvulnerableCD = false;
 
@@ -45,6 +47,7 @@ public class PlayerControllerMultiplayer : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        healthText.text = playerHealth.ToString();
         isAlive = true;
         rb2D = GetComponent<Rigidbody2D>();
     }
@@ -118,6 +121,8 @@ public class PlayerControllerMultiplayer : MonoBehaviourPunCallbacks
         {
             Debug.Log("Player has died.");
             isAlive = false;
+            this.gameObject.tag = "Destroyed";
+            Destroy(this.gameObject);
             GameManager.manager.CheckMultiplayerState();
         }
 
@@ -125,6 +130,7 @@ public class PlayerControllerMultiplayer : MonoBehaviourPunCallbacks
         {
             Debug.Log("Player has lost " + dmg + " health.");
             playerHealth -= dmg;
+            healthText.text = playerHealth.ToString();
             vulnerabilityCDCounter = vulnerabilityCD;
             isInvulnerableCD = true;
         }
@@ -135,7 +141,7 @@ public class PlayerControllerMultiplayer : MonoBehaviourPunCallbacks
         if (collision.CompareTag("Explosion") && photonView.IsMine)
         {
             Debug.Log("Player hit by explosion!");
-            GameManager.manager.CheckGameState();
+            GameManager.manager.CheckMultiplayerState();
             TakeDamage(1);
         }
 

@@ -18,16 +18,22 @@ public class EndMenu : MonoBehaviour
 
     void Update()
     {
-        if(GameManager.manager.gameOver)
+        
+    }
+
+    public void CheckEndMenu()
+    {
+        if (GameManager.manager.gameOver && GameManager.manager.isSingleplayer)
         {
             endMenuUI.SetActive(true);
 
-            if(GameManager.manager.isGameWon)
+            if (GameManager.manager.isGameWon)
             {
                 gameOverText.text = "Game won";
                 retryButton.gameObject.SetActive(false);
                 nextLevelButton.gameObject.SetActive(true);
-            } else
+            }
+            else
             {
                 gameOverText.text = "Game lost";
                 retryButton.gameObject.SetActive(true);

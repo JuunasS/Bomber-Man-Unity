@@ -13,7 +13,7 @@ public class EnemyCollision : MonoBehaviour
             gameObject.tag = "Destroyed";
             GameManager.manager.AddScore(10);
             Destroy(gameObject);
-            GameManager.manager.CheckGameState();
+            GameManager.manager.CheckSingleplayerState();
         }
     }
 }

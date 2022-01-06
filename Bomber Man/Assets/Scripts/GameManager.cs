@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Checks the state of the game
-    public void CheckGameState()
+    public void CheckSingleplayerState()
     {
         Debug.Log("Checking game state...");
 
@@ -153,10 +153,20 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Game over! All enemies are dead.");
             }
         }
+
+        MenuCanvas.GetComponent<EndMenu>().CheckEndMenu();
     }
 
     public void CheckMultiplayerState()
     {
+        if(CountPlayers() <= 1)
+        {
+            gameOver = true;
+            // Game over
+            Debug.Log("Set EndMenuMultiplayer Active");
+            MenuCanvas.GetComponent<EndMenuMultiplayer>().CheckEndMenu();
+        }
+        /*
         foreach (GameObject player in playerTable)
         {
             Debug.Log("Looping playertable");
@@ -166,6 +176,7 @@ public class GameManager : MonoBehaviour
                 // Add to counter, if only 1 player is alive set endmenu.
             }
         }
+        */
     }
 }
 
