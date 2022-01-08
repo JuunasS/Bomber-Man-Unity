@@ -32,6 +32,11 @@ public class EndMenu : MonoBehaviour
                 gameOverText.text = "Game won";
                 retryButton.gameObject.SetActive(false);
                 nextLevelButton.gameObject.SetActive(true);
+                if (GameManager.manager.GetCurrentScene().name == "Level-3")
+                {
+                    retryButton.gameObject.SetActive(false);
+                    nextLevelButton.gameObject.SetActive(false);
+                }
             }
             else
             {

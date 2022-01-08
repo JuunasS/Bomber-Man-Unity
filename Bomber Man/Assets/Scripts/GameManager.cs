@@ -55,6 +55,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
+    public Scene GetCurrentScene()
+    {
+        return SceneManager.GetActiveScene();
+    }
+
     public void RetryLevel()
     {
         score = 0;
@@ -76,7 +82,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("LevelAt", nextScene);
         }
         SceneManager.LoadScene(nextScene);
-
     }
 
     // Used for adding CountEnemies() after the scene is loaded.
@@ -96,12 +101,12 @@ public class GameManager : MonoBehaviour
     {
         score += num;
         string highscoreKey = SceneManager.GetActiveScene().name;
-        PlayerPrefs.SetInt(highscoreKey, highScore);
-        GameObject.Find("ScoreCanvas").GetComponent<SingleplayerScore>().UpdateScore(score, PlayerPrefs.GetInt(highscoreKey, 0));
         if (this.score > highScore)
         {
             highScore = this.score;
         }
+        PlayerPrefs.SetInt(highscoreKey, highScore);
+        GameObject.Find("ScoreCanvas").GetComponent<SingleplayerScore>().UpdateScore(score, PlayerPrefs.GetInt(highscoreKey, 0));
     }
 
     // Counts the amount of enemies at the start of the level.
@@ -166,17 +171,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("Set EndMenuMultiplayer Active");
             MenuCanvas.GetComponent<EndMenuMultiplayer>().CheckEndMenu();
         }
-        /*
-        foreach (GameObject player in playerTable)
-        {
-            Debug.Log("Looping playertable");
-
-            if (player.GetComponent<PlayerControllerMultiplayer>().isAlive == false)
-            {
-                // Add to counter, if only 1 player is alive set endmenu.
-            }
-        }
-        */
     }
 }
 
