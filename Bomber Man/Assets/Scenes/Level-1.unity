@@ -4226,6 +4226,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 369451517351099227, guid: be3d0e011eb9168489c118a9e26e0dce, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3833492164485738537, guid: be3d0e011eb9168489c118a9e26e0dce, type: 3}
       propertyPath: m_Name
       value: Bomb-Boost-3
@@ -4330,6 +4334,10 @@ PrefabInstance:
     - target: {fileID: 2619886588185855309, guid: 096928c427af5b14a86d694ccd346c26, type: 3}
       propertyPath: m_Name
       value: Bomb-Boost-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7018229063632885811, guid: 096928c427af5b14a86d694ccd346c26, type: 3}
+      propertyPath: sceneViewId
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 096928c427af5b14a86d694ccd346c26, type: 3}
@@ -4602,6 +4610,10 @@ PrefabInstance:
     - target: {fileID: 2302868716219073044, guid: c85ceb062e125b94692e35a6a5963084, type: 3}
       propertyPath: m_Name
       value: Bomb-Boost-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9187581560615610893, guid: c85ceb062e125b94692e35a6a5963084, type: 3}
+      propertyPath: sceneViewId
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c85ceb062e125b94692e35a6a5963084, type: 3}
