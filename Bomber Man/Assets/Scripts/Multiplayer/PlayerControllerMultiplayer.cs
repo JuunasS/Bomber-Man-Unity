@@ -41,6 +41,7 @@ public class PlayerControllerMultiplayer : MonoBehaviourPunCallbacks
         {
             Debug.Log("Setting tilemap");
             tilemap = GameObject.FindGameObjectWithTag("Gameplay_Tilemap").GetComponent<Tilemap>();
+            GameObject.Find("WaitForPlayers").GetComponent<WaitForPlayers>().CheckState();
         }
     }
 
@@ -57,7 +58,7 @@ public class PlayerControllerMultiplayer : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            if (isAlive)
+            if (isAlive && GameManager.manager.isGameStarted)
             {
                 // Movement inputs
                 movement.x = Input.GetAxisRaw("Horizontal");

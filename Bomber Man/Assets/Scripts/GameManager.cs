@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public bool isSingleplayer;
     public bool gameOver;
     public bool isGameWon;
-    public bool levelStarted;
+    public bool isGameStarted;
     public int nextScene;
 
     public GameObject[] playerTable;
