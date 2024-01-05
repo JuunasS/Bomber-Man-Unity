@@ -1,2 +1,2 @@
-# Bomber Man Unity
-Bomberman inspired game.
+# Bomberman Unity
+Bomberman game created in unity.
